@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#020817">
+<title>PRITRON AI — Your Personal Assistant</title>
+<style>
+:root{--blue:#16cfff;--cyan:#70f4ff;--bg:#020817;--panel:#07172b;--line:#123c5c;--text:#e7faff;--muted:#89a9bd}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 50% 15%,#0a2850 0%,#020817 52%,#01040b 100%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+.app{max-width:720px;margin:auto;padding:18px 15px 24px}
+.top{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding:8px 2px 16px}
+.brand{font-size:19px;font-weight:800;letter-spacing:1.6px}.brand span{color:var(--blue)}
+.status{font-size:11px;color:#69f7c7;letter-spacing:1px}
+.status:before{content:"";display:inline-block;width:7px;height:7px;background:#36efae;border-radius:50%;margin-right:7px;box-shadow:0 0 9px #36efae}
+.hero{text-align:center;padding:30px 0 24px}
+.orb{height:190px;width:190px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;position:relative;background:radial-gradient(circle,#0a3865 0%,#04162e 47%,#031020 65%);border:2px solid #167fc4;box-shadow:0 0 22px #087dce66,inset 0 0 30px #0d82d966}
+.orb:before,.orb:after{content:"";position:absolute;border-radius:50%;inset:-12px;border:1px dashed #1ebfff;animation:spin 18s linear infinite}
+.orb:after{inset:8px;border:3px solid transparent;border-top-color:#6af4ff;border-bottom-color:#1594ed;animation:spin 5s linear infinite}
+.orb.listening{box-shadow:0 0 45px #12dfff99,inset 0 0 35px #0d82d9}
+.core{font-size:36px;color:var(--cyan);text-shadow:0 0 20px #18dfff;z-index:1}
+@keyframes spin{to{transform:rotate(360deg)}}
+h1{font-size:26px;letter-spacing:2px;margin:0} .sub{color:var(--muted);font-size:13px;margin-top:7px}
+.card{background:linear-gradient(145deg,#071a30eF,#040e1eF);border:1px solid var(--line);border-radius:18px;padding:15px;margin:12px 0;box-shadow:0 8px 25px #0003}
+.card-title{font-size:12px;color:var(--cyan);letter-spacing:1.4px;margin-bottom:10px}
+.chat{height:260px;overflow:auto;display:flex;flex-direction:column;gap:10px;padding:3px}
+.msg{max-width:88%;padding:11px 13px;border-radius:14px;font-size:14px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere}
+.bot{align-self:flex-start;background:#0b2942;border:1px solid #155276;border-bottom-left-radius:4px}
+.user{align-self:flex-end;background:#075c9a;border:1px solid #168bd1;border-bottom-right-radius:4px}
+.row{display:flex;gap:8px;margin-top:12px}
+input{min-width:0;flex:1;background:#031020;border:1px solid #174a6b;border-radius:13px;color:white;padding:13px;font-size:14px;outline:none}
+input:focus{border-color:var(--blue)}
+button{border:1px solid #148bd0;background:linear-gradient(135deg,#0879c6,#034b8e);color:white;border-radius:13px;padding:11px 14px;font-weight:700;font-size:14px}
+button:active{transform:scale(.97)}.mic{width:100%;padding:15px;border-radius:15px;background:linear-gradient(135deg,#063d65,#061a34);border-color:#12b8ed;font-size:15px}
+.mic.listening{background:#5d1730;border-color:#ff6b8c}
+.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tool{padding:13px 5px;background:#06162a;border-color:#154263;font-size:12px}
+.small{font-size:11px;color:var(--muted);line-height:1.5}
+footer{text-align:center;font-size:11px;color:#64869d;padding:18px 0 4px}
+
+.brand span{color:#16cfff;text-shadow:0 0 12px #16cfff66}
+.core{font-weight:900;font-style:italic;transform:skew(-12deg);font-size:58px;letter-spacing:-5px}
+.hero h1{color:#e7faff;text-shadow:0 0 16px #0ba8e8}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top"><div class="brand">PRITRON <span>AI</span></div><div class="status">SYSTEM READY</div></header>
+  <section class="hero">
+    <div class="orb" id="orb"><div class="core">P</div></div>
+    <h1>HELLO, PRITAM</h1>
+    <div class="sub">Your Vision. Your Intelligence. Your Assistant.</div>
+  </section>
+  <section class="card">
+    <div class="card-title">◈ CHAT INTERFACE</div>
+    <div class="chat" id="chat" aria-live="polite">
+      <div class="msg bot">Namaste Pritam! Main PRITRON AI hoon — tumhara personal assistant prototype. Message bhejo ya voice button try karo. Abhi main demo mode mein hoon.</div>
+    </div>
+    <form class="row" id="form">
+      <input id="input" placeholder="Yahan apna sawal likho..." autocomplete="off" aria-label="Message">
+      <button type="submit">SEND ➤</button>
+    </form>
+  </section>
+  <button class="mic" id="mic">🎙️ &nbsp; TAP TO SPEAK</button>
+  <section class="card">
+    <div class="card-title">◈ QUICK COMMANDS</div>
+    <div class="tools">
+      <button class="tool" data-prompt="Mujhe motivate karo">⚡ Motivation</button>
+      <button class="tool" data-prompt="Mujhe padhai ka plan do">📚 Study Plan</button>
+      <button class="tool" data-prompt="Mere baare mein batao">🤖 About PRITRON</button>
+    </div>
+  </section>
+  <p class="small">Prototype note: Chat replies abhi built-in demo hain. Real AI answers ke liye baad mein secure AI service connect karni hogi. Voice recognition browser/device support par depend karta hai.</p>
+  <footer>YOUR VISION • YOUR INTELLIGENCE • YOUR ASSISTANT</footer>
+</div>
+<script>
+const chat=document.getElementById('chat'), input=document.getElementById('input'), form=document.getElementById('form');
+const mic=document.getElementById('mic'), orb=document.getElementById('orb');
+function addMsg(text,who){const d=document.createElement('div');d.className='msg '+who;d.textContent=text;chat.appendChild(d);chat.scrollTop=chat.scrollHeight}
+function replyFor(q){
+ const s=q.toLowerCase();
+ if(/hello|hi|namaste|hey|pritron/.test(s)) return 'Namaste Pritam! Systems ready. Batao, main tumhari kya help karun?';
+ if(/motivat|himmat|inspire/.test(s)) return 'Pritam, bade projects chhote steps se bante hain. Aaj ek feature complete karo, kal agla. Consistency hi tumhari superpower hai!';
+ if(/padhai|study|exam|homework/.test(s)) return 'Study mode: 25 minute focus, 5 minute break. Pehle ek topic padho, phir bina dekhe 5 questions solve karo. Kaunsa subject hai?';
+ if(/time|samay|date|tarikh/.test(s)) return 'Tumhare device ke hisaab se abhi: '+new Date().toLocaleString('hi-IN')+'.';
+ if(/who are you|kaun ho|about/.test(s)) return 'Main PRITRON AI ka first prototype hoon. Abhi demo replies, voice output aur supported browser mein voice input try kar sakte ho. Real AI integration next step hai.';
+ if(/thank/.test(s)) return 'You are welcome, Pritam! Chalo is assistant ko dheere-dheere aur smart banate hain.';
+ return 'Maine tumhara message suna: “'+q+'”. Abhi main demo mode mein hoon, isliye mere paas real AI knowledge connection nahi hai. Agle version mein AI connect karenge.';
+}
+function speak(t){if(!('speechSynthesis' in window))return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='hi-IN';u.rate=1;window.speechSynthesis.speak(u)}
+function send(q){q=(q||'').trim();if(!q)return;addMsg(q,'user');input.value='';const r=replyFor(q);setTimeout(()=>{addMsg(r,'bot');speak(r)},250)}
+form.addEventListener('submit',e=>{e.preventDefault();send(input.value)});
+document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click',()=>send(b.dataset.prompt)));
+let rec=null,listening=false;
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(SR){rec=new SR();rec.lang='hi-IN';rec.interimResults=false;rec.maxAlternatives=1;rec.onresult=e=>{input.value=e.results[0][0].transcript;send(input.value)};rec.onerror=()=>{addMsg('Voice input nahi chala. Browser permission check karo ya message type karo.','bot')};rec.onend=()=>{listening=false;mic.classList.remove('listening');orb.classList.remove('listening');mic.innerHTML='🎙️ &nbsp; TAP TO SPEAK'}}
+mic.addEventListener('click',()=>{if(!rec){addMsg('Is browser mein speech recognition supported nahi hai. Chrome mein try karo ya message type karo.','bot');return}try{if(!listening){listening=true;mic.classList.add('listening');orb.classList.add('listening');mic.textContent='🔴 LISTENING... BOLO';rec.start()}else rec.stop()}catch(e){listening=false;mic.classList.remove('listening');orb.classList.remove('listening');mic.textContent='🎙️ TAP TO SPEAK'}});
+</script>
+</body>
+</html>
